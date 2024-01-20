@@ -2,6 +2,7 @@ package com.redis.repository;
 
 
 import com.redis.entity.Product;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class RedisRepository {
 
     public static final String HASH_KEY = "Product";
@@ -26,6 +28,7 @@ public class RedisRepository {
     }
 
     public Product findById(String id) {
+        log.info("DB call for id {} ",id);
         return (Product) redisTemplate.opsForHash().get(HASH_KEY, id);
     }
 
@@ -36,6 +39,7 @@ public class RedisRepository {
 
     public Product updateProduct(Product product, String id) {
 
+        log.info("making db call to update product id {} ",id);
         Product p = (Product) redisTemplate.opsForHash().get(HASH_KEY, id);
 
 
